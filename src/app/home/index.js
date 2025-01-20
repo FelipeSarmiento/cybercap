@@ -70,7 +70,7 @@ export default function Index() {
         <h2 className="text-3xl font-bold text-center">Conoce un poco sobre noticias de Ciberseguridad!</h2>
         <div className="grid grid-cols-3 gap-10 p-20">
           {
-            news.length > 0 ? news?.map((article, index) => (
+            news?.length > 0 ? news?.map((article, index) => (
                 <article key={article.publishedAt + index} className="flex bg-white transition hover:shadow-xl">
                   <div className="rotate-180 p-2 [writing-mode:_vertical-lr]">
                     <time
