@@ -18,7 +18,7 @@ export const NavBar = () => {
 
     const [session, setSession] = useState('')
 
-    const [path, setPath] = useState(window.location.pathname)
+    const [path, setPath] = useState()
 
     const logout = () => {
         setSession('')
@@ -26,6 +26,7 @@ export const NavBar = () => {
     }
 
     useEffect(() => {
+        setPath(window.location?.pathname)
         getSession().then((session) => {
             setSession(session?.username)
         })
