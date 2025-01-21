@@ -2,7 +2,7 @@
 import {Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/react'
 import {Bars3Icon, BellIcon, XMarkIcon} from '@heroicons/react/24/outline'
 import {ArrowRightEndOnRectangleIcon} from "@heroicons/react/16/solid";
-import { getSession } from '../../data/data';
+import {getSession, logout as logOut} from '../../data/data';
 import {useEffect, useState} from "react";
 
 const navigation = [
@@ -22,13 +22,15 @@ export const NavBar = () => {
 
     const logout = () => {
         setSession('')
-        logOut().then(() => { window.location.href = '/Auth/Login' })
+        logOut().then(() => {
+            window.location.href = '/login'
+        })
     }
 
     useEffect(() => {
         setPath(window.location?.pathname)
         getSession().then((session) => {
-            setSession(session?.username)
+            setSession(session?.names)
         })
     }, []);
 
@@ -78,31 +80,41 @@ export const NavBar = () => {
                             {/* Profile dropdown */}
                             {
                                 !session ? (
-                                        (path === "/register" || path === '/login' ? "": (
-                                            <a href="/login">
-                                                <Menu as="div" className="relative ml-3">
-                                                    <div>
-                                                        <MenuButton className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
-                                                            <span className="absolute -inset-1.5"/>
-                                                            <span className="font-bold text-md">Iniciar Sesión</span>
-                                                            <span className="sr-only">Open user menu</span>
-                                                            <ArrowRightEndOnRectangleIcon className="size-6"/>
-                                                        </MenuButton>
-                                                    </div>
-                                                </Menu>
-                                            </a>
-                                        ))
+                                    (path === "/register" || path === '/login' ? "" : (
+                                        <a href="/login">
+                                            <Menu as="div" className="relative ml-3">
+                                                <div>
+                                                    <MenuButton className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
+                                                        <span className="absolute -inset-1.5"/>
+                                                        <span className="font-bold text-md">Iniciar Sesión</span>
+                                                        <span className="sr-only">Open user menu</span>
+                                                        <ArrowRightEndOnRectangleIcon className="size-6"/>
+                                                    </MenuButton>
+                                                </div>
+                                            </Menu>
+                                        </a>
+                                    ))
                                 ) : (
-                                    <Menu as="div" className="relative ml-3">
-                                        <div>
-                                            <MenuButton className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
-                                                <span className="absolute -inset-1.5"/>
-                                                <span className="font-bold text-md">My Profile</span>
-                                                <span className="sr-only">Open user menu</span>
-                                                <ArrowRightEndOnRectangleIcon className="size-6"/>
-                                            </MenuButton>
-                                        </div>
-                                    </Menu>
+                                    <>
+                                        <Menu as="div" className="relative ml-3">
+                                            <div>
+                                                <MenuButton disabled className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
+                                                    <span className="absolute -inset-1.5"/>
+                                                    <span className="font-bold text-md">{session}</span>
+                                                    <span className="sr-only">Open user menu</span>
+                                                </MenuButton>
+                                            </div>
+                                        </Menu>
+                                        <Menu as="div" className="relative ml-3">
+                                            <div>
+                                                <MenuButton onClick={ logout } className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
+                                                    <span className="absolute -inset-1.5"/>
+                                                    <span className="font-bold text-md">Log Out</span>
+                                                    <span className="sr-only">Open user menu</span>
+                                                </MenuButton>
+                                            </div>
+                                        </Menu>
+                                    </>
                                 )
                             }
 

@@ -1,18 +1,33 @@
 'use client'
+import { login, setSession } from "../../data/data";
+
+import {useForm} from "../../../src/lib/hooks/useForm";
+import {useState} from "react";
 
 export default function Home() {
 
+    const {onInputChange, formState} = useForm({
+        email: '',
+        password: ''
+    })
+
+    const [errorMessage, setErrorMessage] = useState('' as string)
+    const handleSignIn = async () => {
+        setErrorMessage('')
+        try {
+            let result = await login(formState)
+
+            if (result.ok) {
+                await setSession(result.user).then(() => { window.location.href = '/courses'})
+            }
+            setErrorMessage(result.message)
+        } catch (e) {
+            setErrorMessage(e.message)
+        }
+    }
 
   return (
       <>
-          {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
           <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                   <h1 className="font-extrabold text-center text-4xl text-[#545E75]">CyberCap</h1>
@@ -22,7 +37,13 @@ export default function Home() {
               </div>
 
               <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                  <form action="#" method="POST" className="space-y-6">
+                  <form
+                      className="space-y-6"
+                      onSubmit={(e) => {
+                          e.preventDefault();
+                          handleSignIn()
+                      }}
+                  >
                       <div>
                           <label htmlFor="email" className="block text-md font-medium text-gray-900">
                               Correo Electronico
@@ -32,9 +53,9 @@ export default function Home() {
                                   id="email"
                                   name="email"
                                   type="email"
-                                  required
-                                  autoComplete="email"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={ formState.email }
+                                  onChange={ onInputChange }
                               />
                           </div>
                       </div>
@@ -50,9 +71,9 @@ export default function Home() {
                                   id="password"
                                   name="password"
                                   type="password"
-                                  required
-                                  autoComplete="current-password"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={ formState.password }
+                                  onChange={ onInputChange }
                               />
                           </div>
                       </div>

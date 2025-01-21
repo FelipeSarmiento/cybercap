@@ -71,44 +71,45 @@ export const registerUser = async (users) => {
     // @ts-ignore
 
 }
-//
-// export const login = async (User: any) => {
-//     const {password, user} = User
-//
-//     const {rows} = await sql(`SELECT * FROM users WHERE email = ${user} OR username = ${user}`);
-//     let objectResp = {
-//         user: null as any,
-//         ok: false as boolean,
-//         message: '' as string
-//     }
-//     if (rows.length === 0) {
-//         objectResp = {
-//             user: null,
-//             ok: false,
-//             message: 'Invalid email or username'
-//         }
-//     } else {
-//         const match = compare(password, rows[0].password, process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY ?? 'S0FtW@r3N3xT!@#')
-//         if (match) {
-//             delete rows[0].password
-//             objectResp = {
-//                 user: {
-//                     ...rows[0],
-//                     profile_picture: rows[0].profile_picture ? Buffer.from(rows[0].profile_picture, 'base64').toString('utf-8') : null
-//                 },
-//                 ok: true,
-//                 message: ''
-//             }
-//         } else {
-//             objectResp = {
-//                 user: null,
-//                 ok: false,
-//                 message: 'Password is incorrect'
-//             }
-//         }
-//     }
-//     return objectResp
-// }
+
+export const login = async (User: any) => {
+    const {password, email} = User
+ let query = `SELECT * FROM usuarios WHERE email = '${email}'`;
+    // @ts-ignore
+    const rows = await sql(query);
+    let objectResp = {
+        user: null as any,
+        ok: false as boolean,
+        message: '' as string
+    }
+    if (rows.length === 0) {
+        objectResp = {
+            user: null,
+            ok: false,
+            message: 'Correo o contraseña incorrectos'
+        }
+    } else {
+        console.log("ROWS: " + JSON.stringify(rows[0]))
+        const match = compare(password, rows[0].password, process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY ?? 'S0FtW@r3N3xT!@#')
+        if (match) {
+            delete rows[0].password
+            objectResp = {
+                user: {
+                    ...rows[0]
+                },
+                ok: true,
+                message: ''
+            }
+        } else {
+            objectResp = {
+                user: null,
+                ok: false,
+                message: 'Password is incorrect'
+            }
+        }
+    }
+    return objectResp
+}
 //
 // export const updateUser = async (user: any) => {
 //     let {iduser, first_name, last_name, username, email, phone_number, about, github, profile_picture, position} = user
@@ -119,11 +120,11 @@ export const registerUser = async (users) => {
 //     return await sql`UPDATE users SET first_name = ${first_name}, last_name = ${last_name}, username = ${username}, email = ${email}, phone_number = ${phone_number}, about = ${about}, github = ${ github }, profile_picture = ${ profile_picture }, position = ${ position }, dateupdated = ${ date_updated } WHERE iduser = ${iduser} RETURNING *`;
 //
 // }
-//
-// export const logout = async () => {
-//     (await cookies()).delete('userSession')
-// }
-//
+
+export const logout = async () => {
+    (await cookies()).delete('userSession')
+}
+
 export const getSession = async () => {
     const session = (await cookies()).get('userSession')?.value;
     if (!session) {
@@ -149,37 +150,37 @@ export const getSession = async () => {
 
     return decryptedData ? JSON.parse(decryptedData) : null;
 }
-//
-// export const setSession = async (session: any) => {
-//     session = {
-//         ...session,
-//         profile_picture: undefined
-//     }
-//
-//     // @ts-ignore
-//     const key = Buffer.from(process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY64 ?? "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef", 'hex');
-//     // @ts-ignore
-//     const iv = Buffer.from(process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY16 ?? "abcdef9876543210abcdef9876543210", 'hex');
-//
-// // Encriptar
-//     const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-//     let encrypted = cipher.update(JSON.stringify(session), 'utf-8', 'hex');
-//     encrypted += cipher.final('hex');
-//
-//     try {
-//         (await cookies()).set('userSession', encrypted, {
-//             httpOnly: false,
-//             secure: process.env.NEXT_PUBLIC_NODE_ENV === 'production',
-//             maxAge: 60 * 60 * 24 * 7,
-//             path: '/'
-//         })
-//     } catch (e) {
-//         console.log(e)
-//     }
-// }
+
+export const setSession = async (session: any) => {
+    session = {
+        ...session,
+        profile_picture: undefined
+    }
+
+    // @ts-ignore
+    const key = Buffer.from(process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY64 ?? "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef", 'hex');
+    // @ts-ignore
+    const iv = Buffer.from(process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY16 ?? "abcdef9876543210abcdef9876543210", 'hex');
+
+// Encriptar
+    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+    let encrypted = cipher.update(JSON.stringify(session), 'utf-8', 'hex');
+    encrypted += cipher.final('hex');
+
+    try {
+        (await cookies()).set('userSession', encrypted, {
+            httpOnly: false,
+            secure: process.env.NEXT_PUBLIC_NODE_ENV === 'production',
+            maxAge: 60 * 60 * 24 * 7,
+            path: '/'
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
 //
 // export const getUser = async (idUser) => {
-//     const {rows} = await sql`SELECT * FROM users WHERE idUser = ${idUser}`;
+//     const rows = await sql`SELECT * FROM users WHERE idUser = ${idUser}`;
 //     return rows[0]
 // }
 //
@@ -193,7 +194,7 @@ export const getSession = async () => {
 // */
 //
 // export const getProjects = async () => {
-//     let {rows} = await sql`SELECT * FROM projects WHERE ispublic = true`;
+//     let rows = await sql`SELECT * FROM projects WHERE ispublic = true`;
 //
 //     const enhancedProjects = await Promise.all(rows.map(async (project) => {
 //         const user = await getUser(project.iduser);
@@ -221,7 +222,7 @@ export const getSession = async () => {
 //
 //     // @ts-ignore
 //     const {iduser} = session
-//     const {rows} = await sql`SELECT * FROM projects WHERE iduser = ${iduser}`;
+//     const rows = await sql`SELECT * FROM projects WHERE iduser = ${iduser}`;
 //     return {
 //         ok: true,
 //         projects: rows
@@ -239,14 +240,14 @@ export const getSession = async () => {
 //     }
 //     // @ts-ignore
 //     const {iduser} = session
-//     const {rows} = await sql`SELECT * FROM projects WHERE projectpublicid = ${project_public_id} AND iduser = ${iduser}`
+//     const rows = await sql`SELECT * FROM projects WHERE projectpublicid = ${project_public_id} AND iduser = ${iduser}`
 //     return {
 //         ok: true,
 //         project: rows
 //     }
 // }
 // export const getPublicProject = async (project_public_id: string) => {
-//     const {rows} = await sql`SELECT * FROM projects WHERE projectpublicid = ${project_public_id}`
+//     const rows = await sql`SELECT * FROM projects WHERE projectpublicid = ${project_public_id}`
 //     return {
 //         ok: true,
 //         project: rows
@@ -323,7 +324,7 @@ export const getSession = async () => {
 // */
 //
 // export const getTemplates = async () => {
-//     let {rows} = await sql`SELECT * FROM templates WHERE ispublic = true`;
+//     let rows = await sql`SELECT * FROM templates WHERE ispublic = true`;
 //
 //     const enhancedTemplate = await Promise.all(rows.map(async (template) => {
 //         const user = await getUser(template.iduser);
@@ -341,7 +342,7 @@ export const getSession = async () => {
 //
 // export const getTemplatesApproved = async () => {
 //
-//     const {rows} = await sql`SELECT * FROM templates WHERE approved = true AND ispublic = true`;
+//     const rows = await sql`SELECT * FROM templates WHERE approved = true AND ispublic = true`;
 //
 //     return {
 //         ok: true,
@@ -361,7 +362,7 @@ export const getSession = async () => {
 //
 //     // @ts-ignore
 //     const {iduser} = session
-//     const {rows} = await sql`SELECT * FROM templates WHERE iduser = ${iduser}`;
+//     const rows = await sql`SELECT * FROM templates WHERE iduser = ${iduser}`;
 //     return {
 //         ok: true,
 //         templates: rows
@@ -380,14 +381,14 @@ export const getSession = async () => {
 //
 //     // @ts-ignore
 //     const {iduser} = session
-//     const {rows} = await sql`SELECT * FROM templates WHERE templatepublicid = ${template_public_id} AND iduser = ${iduser}`
+//     const rows = await sql`SELECT * FROM templates WHERE templatepublicid = ${template_public_id} AND iduser = ${iduser}`
 //     return {
 //         ok: true,
 //         template: rows
 //     }
 // }
 // export const getPublicTemplate = async (template_public_id: string) => {
-//     const {rows} = await sql`SELECT * FROM templates WHERE templatepublicid = ${template_public_id}`
+//     const rows = await sql`SELECT * FROM templates WHERE templatepublicid = ${template_public_id}`
 //     return {
 //         ok: true,
 //         templates: rows
@@ -461,12 +462,12 @@ export const getSession = async () => {
 // *  ANALYTICS
 // *  ANALYTICS
 // */
-//
-// export const getIpDevice = async (ip) => {
-//     console.log("-------------------IP ADDRESS-------------------")
-//     console.log(ip)
-//     console.log("-------------------IP ADDRESS-------------------")
-//     const date = new Date();
-//     // @ts-ignore
-//     return await sql`INSERT INTO visitors (ipvisitor, datevisit) VALUES (${ip}, ${date}) RETURNING *`;
-// }
+
+export const getIpDevice = async (ip) => {
+    console.log("-------------------IP ADDRESS-------------------")
+    console.log(ip)
+    console.log("-------------------IP ADDRESS-------------------")
+    const date = new Date();
+    // @ts-ignore
+    return await sql`INSERT INTO visitors (ipvisitor, datevisit) VALUES (${ip}, ${date}) RETURNING *`;
+}
