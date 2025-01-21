@@ -2,7 +2,7 @@
 import {Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/react'
 import {Bars3Icon, BellIcon, XMarkIcon} from '@heroicons/react/24/outline'
 import {ArrowRightEndOnRectangleIcon} from "@heroicons/react/16/solid";
-import { getSession, logout as logOut } from '../../data/data';
+import { getSession } from '../../data/data';
 import {useEffect, useState} from "react";
 
 const navigation = [
