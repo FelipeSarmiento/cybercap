@@ -23,7 +23,7 @@ export async function middleware(req) {
 }
 
 export const config = {
-    matcher: ['/login', '/register', '/courses', '/', '/Dashboard', '/myprofile'],
+    matcher: ['/login', '/register', '/courses', '/', '/Dashboard', '/myprofile', '/courses/secureemails', '/courses/phishing'],
     api: {
         bodyParser: {
             sizeLimit: '40mb',

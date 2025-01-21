@@ -105,7 +105,7 @@ export const login = async (User: any) => {
             objectResp = {
                 user: null,
                 ok: false,
-                message: 'Password is incorrect'
+                message: 'Contraseña Incorrecta'
             }
         }
     }
