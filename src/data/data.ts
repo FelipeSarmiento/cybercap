@@ -89,9 +89,9 @@ export const login = async (User: any) => {
             message: 'Correo o contraseña incorrectos'
         }
     } else {
-        console.log("ROWS: " + JSON.stringify(rows[0]))
         const match = compare(password, rows[0].password, process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY ?? 'S0FtW@r3N3xT!@#')
         if (match) {
+            console.log("USUARIO CORRECTO")
             delete rows[0].password
             objectResp = {
                 user: {
