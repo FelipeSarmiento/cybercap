@@ -1,6 +1,39 @@
 'use client'
 
+
+// @ts-ignore
+import {useForm} from "../../lib/hooks/useForm";
+// @ts-ignore
+import { registerUser } from '../../data/data'
+import {useState} from "react";
+
 export default function Home() {
+
+    const {onInputChange, formState} = useForm({
+    })
+
+    const [message, setMessage] = useState({
+        message: '',
+        type: ''
+    } as {message: string, type: string})
+
+    const handleSignUp = async () => {
+        setMessage({message: '', type: ''})
+        try {
+            await registerUser(formState)
+            setMessage({message: 'User created successfully, now you can login', type: 'success'})
+        }
+        catch (e) {
+            if (e.message.includes('duplicate')){
+                if (e.message.includes('email')){
+                    setMessage({message: 'Email already exists', type: 'error'})
+                }
+                else if (e.message.includes('username')){
+                    setMessage({message: 'Username already exists', type: 'error'})
+                }
+            }
+        }
+    }
 
 
   return (
@@ -22,10 +55,13 @@ export default function Home() {
               </div>
 
               <div className="mt-10  sm:mx-auto sm:w-full sm:max-w-2xl">
-                  <form action="#" method="POST" className="grid grid-cols-2 gap-8">
+                  <form action="#" method="POST" className="grid grid-cols-2 gap-8" onSubmit={ (e) => {
+                      e.preventDefault();
+                      handleSignUp()
+                  }}>
                       {/* Nombres */}
                       <div>
-                          <label htmlFor="name" className="block text-md font-medium text-gray-900">
+                          <label htmlFor="names" className="block text-md font-medium text-gray-900">
                               Nombres*
                           </label>
                           <div className="mt-2">
@@ -36,6 +72,8 @@ export default function Home() {
                                   required
                                   autoComplete="names"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={formState.names}
+                                  onChange={onInputChange}
                               />
                           </div>
                       </div>
@@ -52,6 +90,8 @@ export default function Home() {
                                   required
                                   autoComplete="lastname"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={formState.lastname}
+                                  onChange={onInputChange}
                               />
                           </div>
                       </div>
@@ -68,6 +108,8 @@ export default function Home() {
                                   required
                                   autoComplete="email"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={formState.email}
+                                  onChange={onInputChange}
                               />
                           </div>
                       </div>
@@ -84,6 +126,8 @@ export default function Home() {
                                   required
                                   autoComplete="identification"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={formState.identification}
+                                  onChange={onInputChange}
                               />
                           </div>
                       </div>
@@ -100,6 +144,8 @@ export default function Home() {
                                   required
                                   autoComplete="phone"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={formState.phone}
+                                  onChange={onInputChange}
                               />
                           </div>
                       </div>
@@ -116,6 +162,8 @@ export default function Home() {
                                   required
                                   autoComplete="role"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={formState.role}
+                                  onChange={onInputChange}
                               />
                           </div>
                       </div>
@@ -132,6 +180,8 @@ export default function Home() {
                                   required
                                   autoComplete="company"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={formState.company}
+                                  onChange={onInputChange}
                               />
                           </div>
                       </div>
@@ -144,10 +194,12 @@ export default function Home() {
                               <input
                                   id="companyname"
                                   name="companyname"
-                                  type="email"
+                                  type="text"
                                   required
                                   autoComplete="companyname"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={formState.companyname}
+                                  onChange={onInputChange}
                               />
                           </div>
                       </div>
@@ -166,6 +218,8 @@ export default function Home() {
                                   required
                                   autoComplete="current-password"
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={formState.password}
+                                  onChange={onInputChange}
                               />
                           </div>
                       </div>
@@ -183,6 +237,8 @@ export default function Home() {
                                   type="password"
                                   required
                                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
+                                  value={formState.cpassword}
+                                  onChange={onInputChange}
                               />
                           </div>
                       </div>
