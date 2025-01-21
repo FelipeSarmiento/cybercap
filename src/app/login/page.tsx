@@ -20,7 +20,7 @@ export default function Home() {
         setErrorMessage('')
         try {
             let result = await login(formState)
-
+            console.log(result)
             if (result.ok) {
                 await setSession(result.user).then(() => { window.location.href = '/courses'})
             }
