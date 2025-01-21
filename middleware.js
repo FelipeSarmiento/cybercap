@@ -1,13 +1,12 @@
 'use server'
 import {NextResponse} from 'next/server'
-import {getSession, getIpDevice} from "./data/data";
 import {cookies} from "next/headers";
 
 export async function middleware(req) {
 
-    getIpDevice(req.ip)
+    const session = (await cookies()).get('userSession')?.value;
 
-    const session =  await cookies().get('userSession')?.value;
+    console.log(session)
 
     if (!session) {
         if (req.nextUrl.pathname.includes('/Dashboard')) {

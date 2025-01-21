@@ -1,6 +1,5 @@
 'use server'
 import {NextResponse} from 'next/server'
-import {getSession, getIpDevice} from "./data/data";
 import {cookies} from "next/headers";
 
 export async function middleware(req) {
