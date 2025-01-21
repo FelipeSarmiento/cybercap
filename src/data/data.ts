@@ -17,17 +17,59 @@ import { neon } from '@neondatabase/serverless';
 const sql = neon(`${process.env.DATABASE_URL}`);
 
 export const registerUser = async (users) => {
-    const {password, email, names, lastname, identification, role, company, companyname, phone, terms} = users
-    const date_created = new Date()
-    let passwordEncrypted = encrypt(password, process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY ?? 'S0FtW@r3N3xT!@#');
+    try {
+        const {password, email, names, lastname, identification, role, company, companyname, phone, terms} = users
+        const date_created = new Date()
+        let passwordEncrypted = encrypt(password, process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY ?? 'S0FtW@r3N3xT!@#');
 
-    let query = `INSERT INTO usuarios (names, lastname, email, identification, phone, role, company, companyname, password, datecreated, dateupdated, terms) VALUES ('${names}', '${lastname}', '${email}', '${identification}', '${phone}', '${role}', '${company}', '${companyname}', '${passwordEncrypted}', '${date_created}', '${date_created}', 'true') RETURNING *`
+        let query = `INSERT INTO usuarios (names, lastname, email, identification, phone, role, company, companyname, password, datecreated, dateupdated, terms) VALUES ('${names}', '${lastname}', '${email}', '${identification}', '${phone}', '${role}', '${company}', '${companyname}', '${passwordEncrypted}', '${date_created}', '${date_created}', 'true') RETURNING *`
 
-    console.log("QUERY: " + query)
-
-
+        let result = await sql(query)
+        // @ts-ignore
+        if (result?.includes('duplicate')) {
+            // @ts-ignore
+            if (result?.includes('email')) {
+                return {
+                    message: "El Correo ya existe",
+                    type: "error"
+                }
+            }
+            // @ts-ignore
+            if (result?.includes('identification')) {
+                console.log("Idddd1")
+                return {
+                    message: "La cedula ya existe",
+                    type: "error"
+                }
+            }
+        }
+        return {
+            message: "Usuario creado correctamente",
+            type: "success"
+        }
+    }
+    catch (e){
+        let result = e
+        console.log("Result: " + result)
+        if (result?.detail.includes('already')) {
+            // @ts-ignore
+            if (result?.detail.includes('email')) {
+                return {
+                    message: "El Correo ya existe",
+                    type: "error"
+                }
+            }
+            // @ts-ignore
+            if (result?.detail.includes('identification')) {
+                return {
+                    message: "La Cédula ya existe",
+                    type: "error"
+                }
+            }
+        }
+    }
     // @ts-ignore
-    return sql(query);
+
 }
 //
 // export const login = async (User: any) => {
@@ -82,31 +124,31 @@ export const registerUser = async (users) => {
 //     (await cookies()).delete('userSession')
 // }
 //
-// export const getSession = async () => {
-//     const session = (await cookies()).get('userSession')?.value;
-//     if (!session) {
-//         return null;
-//     }
-//
-//     // Verifica si los valores de las variables de entorno están definidos
-//     const secretKey64 = process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY64 ?? "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
-//     const secretKey16 = process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY16 ?? "abcdef9876543210abcdef9876543210";
-//     if (!secretKey64 || !secretKey16) {
-//         throw new Error("Las variables de entorno para la clave y el IV no están definidas.");
-//     }
-//
-//     // Convierte la clave y el IV de hexadecimal a Buffer
-//     const key = Buffer.from(secretKey64, 'hex');
-//     const iv = Buffer.from(secretKey16, 'hex');
-//
-//     // Desencriptar
-//     const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
-//     // @ts-ignore
-//     let decryptedData: string = decipher.update(Buffer.from(session, 'hex'), 'binary', 'utf-8');
-//     decryptedData += decipher.final('utf-8');
-//
-//     return decryptedData ? JSON.parse(decryptedData) : null;
-// }
+export const getSession = async () => {
+    const session = (await cookies()).get('userSession')?.value;
+    if (!session) {
+        return null;
+    }
+
+    // Verifica si los valores de las variables de entorno están definidos
+    const secretKey64 = process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY64 ?? "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
+    const secretKey16 = process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY16 ?? "abcdef9876543210abcdef9876543210";
+    if (!secretKey64 || !secretKey16) {
+        throw new Error("Las variables de entorno para la clave y el IV no están definidas.");
+    }
+
+    // Convierte la clave y el IV de hexadecimal a Buffer
+    const key = Buffer.from(secretKey64, 'hex');
+    const iv = Buffer.from(secretKey16, 'hex');
+
+    // Desencriptar
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+    // @ts-ignore
+    let decryptedData: string = decipher.update(Buffer.from(session, 'hex'), 'binary', 'utf-8');
+    decryptedData += decipher.final('utf-8');
+
+    return decryptedData ? JSON.parse(decryptedData) : null;
+}
 //
 // export const setSession = async (session: any) => {
 //     session = {

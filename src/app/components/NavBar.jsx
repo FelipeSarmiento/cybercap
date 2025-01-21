@@ -1,6 +1,9 @@
+'use client'
 import {Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/react'
 import {Bars3Icon, BellIcon, XMarkIcon} from '@heroicons/react/24/outline'
 import {ArrowRightEndOnRectangleIcon} from "@heroicons/react/16/solid";
+import { getSession, logout as logOut } from '../../data/data';
+import {useEffect, useState} from "react";
 
 const navigation = [
     {name: 'Inicio', href: '/', current: true},
@@ -12,6 +15,23 @@ function classNames(...classes) {
 }
 
 export const NavBar = () => {
+
+    const [session, setSession] = useState('')
+
+    const [path, setPath] = useState(window.location.pathname)
+
+    const logout = () => {
+        setSession('')
+        logOut().then(() => { window.location.href = '/Auth/Login' })
+    }
+
+    useEffect(() => {
+        getSession().then((session) => {
+            setSession(session?.username)
+        })
+    }, []);
+
+
     return (
         <>
             <Disclosure as="nav" className="bg-[#545E75] fixed top-0 z-50 left-0 w-full text-white border-b-4 border-[#304D6D]">
@@ -55,18 +75,36 @@ export const NavBar = () => {
                         </div>
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                             {/* Profile dropdown */}
-                            <a href="/login">
-                                <Menu as="div" className="relative ml-3">
-                                    <div>
-                                        <MenuButton className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
-                                            <span className="absolute -inset-1.5"/>
-                                            <span className="font-bold text-md">Iniciar Sesión</span>
-                                            <span className="sr-only">Open user menu</span>
-                                            <ArrowRightEndOnRectangleIcon className="size-6"/>
-                                        </MenuButton>
-                                    </div>
-                                </Menu>
-                            </a>
+                            {
+                                !session ? (
+                                        (path === "/register" || path === '/login' ? "": (
+                                            <a href="/login">
+                                                <Menu as="div" className="relative ml-3">
+                                                    <div>
+                                                        <MenuButton className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
+                                                            <span className="absolute -inset-1.5"/>
+                                                            <span className="font-bold text-md">Iniciar Sesión</span>
+                                                            <span className="sr-only">Open user menu</span>
+                                                            <ArrowRightEndOnRectangleIcon className="size-6"/>
+                                                        </MenuButton>
+                                                    </div>
+                                                </Menu>
+                                            </a>
+                                        ))
+                                ) : (
+                                    <Menu as="div" className="relative ml-3">
+                                        <div>
+                                            <MenuButton className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
+                                                <span className="absolute -inset-1.5"/>
+                                                <span className="font-bold text-md">My Profile</span>
+                                                <span className="sr-only">Open user menu</span>
+                                                <ArrowRightEndOnRectangleIcon className="size-6"/>
+                                            </MenuButton>
+                                        </div>
+                                    </Menu>
+                                )
+                            }
+
                         </div>
                     </div>
                 </div>
