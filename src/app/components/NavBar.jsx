@@ -30,9 +30,14 @@ export const NavBar = () => {
     useEffect(() => {
         setPath(window.location?.pathname)
         getSession().then((session) => {
-            setSession(session?.names)
+            setSession({
+                name: session?.names,
+                type: session?.company,
+                companyname: session?.companyname
+            })
         })
     }, []);
+
 
 
     return (
@@ -100,11 +105,26 @@ export const NavBar = () => {
                                             <div>
                                                 <MenuButton disabled className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
                                                     <span className="absolute -inset-1.5"/>
-                                                    <span className="font-bold text-md">{session}</span>
+                                                    <span className="font-bold text-md">{session?.name}</span>
                                                     <span className="sr-only">Open user menu</span>
                                                 </MenuButton>
                                             </div>
                                         </Menu>
+                                        {
+                                            session?.type === 'empresa' ? (
+                                                <a href={`/${session?.companyname}`}>
+                                                    <Menu as="div" className="relative ml-3">
+                                                        <div>
+                                                            <MenuButton className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
+                                                                <span className="absolute -inset-1.5"/>
+                                                                <span className="font-bold text-md">{session?.companyname}</span>
+                                                                <span className="sr-only">Open user menu</span>
+                                                            </MenuButton>
+                                                        </div>
+                                                    </Menu>
+                                                </a>
+                                            ) : ''
+                                        }
                                         <Menu as="div" className="relative ml-3">
                                             <div>
                                                 <MenuButton onClick={ logout } className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">

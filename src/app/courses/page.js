@@ -20,14 +20,14 @@ const callouts = [
         description: 'En este curso conocerás cómo crear y gestionar contraseñas seguras que protejan tus cuentas. Aprenderás las características de una contraseña robusta, cómo evitar ataques comunes y el uso de gestores de contraseñas para mejorar tu seguridad digital.',
         imageSrc: 'https://blog.udlap.mx/wp-content/uploads/2020/08/contrasena-.jpg',
         imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
-        href: '#',
+        href: '/courses/strongpasswords',
     },
     {
         name: 'Ingeniería Social',
         description: 'En este curso descubrirás cómo los ciberdelincuentes manipulan a las personas para obtener información confidencial. Aprenderás a reconocer tácticas de engaño, como llamadas fraudulentas y mensajes falsos, y a protegerte contra estos ataques utilizando estrategias efectivas.',
         imageSrc: 'https://www.esystems.com.co/wp-content/uploads/definicion-de-ingenieria-social.jpg',
         imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
-        href: '#',
+        href: '/courses/socialengineering',
     },
 ]
 export default function Page() {

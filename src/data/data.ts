@@ -19,6 +19,7 @@ const sql = neon(`${process.env.DATABASE_URL}`);
 export const registerUser = async (users) => {
     try {
         const {password, email, names, lastname, identification, role, company, companyname, phone, terms} = users
+        console.log("name: " + company)
         const date_created = new Date()
         let passwordEncrypted = encrypt(password, process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY ?? 'S0FtW@r3N3xT!@#');
 
@@ -36,7 +37,6 @@ export const registerUser = async (users) => {
             }
             // @ts-ignore
             if (result?.includes('identification')) {
-                console.log("Idddd1")
                 return {
                     message: "La cedula ya existe",
                     type: "error"
@@ -50,7 +50,6 @@ export const registerUser = async (users) => {
     }
     catch (e){
         let result = e
-        console.log("Result: " + result)
         if (result?.detail.includes('already')) {
             // @ts-ignore
             if (result?.detail.includes('email')) {
@@ -91,7 +90,6 @@ export const login = async (User: any) => {
     } else {
         const match = compare(password, rows[0].password, process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY ?? 'S0FtW@r3N3xT!@#')
         if (match) {
-            console.log("USUARIO CORRECTO")
             delete rows[0].password
             objectResp = {
                 user: {
@@ -101,7 +99,6 @@ export const login = async (User: any) => {
                 message: ''
             }
         } else {
-            console.log("USUARIO INCORRECTO")
             objectResp = {
                 user: null,
                 ok: false,
@@ -179,6 +176,17 @@ export const setSession = async (session: any) => {
         console.log(e)
     }
 }
+
+export const updateUserCourse = async (nombreCurso, valor) => {
+    let idUsuario = "";
+    const session = await getSession().then((value) => {
+        idUsuario = value?.idusuario;
+    })
+    // @ts-ignore
+    let query = `UPDATE usuarios SET ${ nombreCurso } = '${valor}' WHERE idusuario = ${ idUsuario } RETURNING *`
+    // @ts-ignore
+    return await sql(query);
+}
 //
 // export const getUser = async (idUser) => {
 //     const rows = await sql`SELECT * FROM users WHERE idUser = ${idUser}`;
@@ -193,23 +201,14 @@ export const setSession = async (session: any) => {
 // *  PROJECTS
 // *  PROJECTS
 // */
-//
-// export const getProjects = async () => {
-//     let rows = await sql`SELECT * FROM projects WHERE ispublic = true`;
-//
-//     const enhancedProjects = await Promise.all(rows.map(async (project) => {
-//         const user = await getUser(project.iduser);
-//         return {
-//             ...project,
-//             user: user
-//         };
-//     }));
-//     return {
-//         ok: true,
-//         projects: enhancedProjects
-//     };
-// };
-//
+
+export const getUsersByCompany = async (companyname) => {
+    let query = `SELECT * FROM usuarios WHERE companyname = '${companyname}'`;
+    let rows = await sql(query);
+    console.log(rows)
+    return rows
+};
+
 //
 // export const getProjectsByUser = async () => {
 //
@@ -282,24 +281,7 @@ export const setSession = async (session: any) => {
 //     // @ts-ignore
 //     const resp = await sql`INSERT INTO projects (projectname, projectdescription, isPublic, typeproject, tags, iduser, items, projectpublicid, datecreated, dateupdated, idtemplate) VALUES (${project_name}, ${project_description}, ${isPublic}, ${type_project}, ${tags}, ${iduser}, ${_items}, ${project_public_id}, ${date_created}, ${date_created}, ${_idtemplate}) RETURNING *`
 // }
-//
-// export const updateProject = async (project) => {
-//     const session = await getSession()
-//     if (!session) {
-//         return {
-//             ok: false,
-//             message: 'You must be logged in to update a project'
-//         }
-//     }
-//
-//     // @ts-ignore
-//     const {iduser} = session
-//     const {project_name, project_description, isPublic, type_project, tags, items, idProject} = project
-//     const date_updated = new Date()
-//     // @ts-ignore
-//     return await sql`UPDATE projects SET projectname = ${project_name}, projectdescription = ${project_description}, isPublic = ${isPublic}, typeproject = ${type_project}, tags = ${tags}, items = ${items}, dateupdated = ${date_updated} WHERE idproject = ${idProject} AND iduser = ${iduser} RETURNING *`;
-// }
-//
+
 // export const deleteProject = async (idProject) => {
 //     const session = await getSession()
 //     if (!session) {
@@ -463,12 +445,3 @@ export const setSession = async (session: any) => {
 // *  ANALYTICS
 // *  ANALYTICS
 // */
-
-export const getIpDevice = async (ip) => {
-    console.log("-------------------IP ADDRESS-------------------")
-    console.log(ip)
-    console.log("-------------------IP ADDRESS-------------------")
-    const date = new Date();
-    // @ts-ignore
-    return await sql`INSERT INTO visitors (ipvisitor, datevisit) VALUES (${ip}, ${date}) RETURNING *`;
-}

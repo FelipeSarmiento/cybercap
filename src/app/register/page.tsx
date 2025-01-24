@@ -45,15 +45,13 @@ export default function Home() {
         setMessage({message: '', type: ''})
 
         let result = await registerUser(formState).then((result) => {
-            if (result?.type === "success"){
-                // onResetForm()
-            }
             setMessage(result)
         })
 
     }
 
 
+    // @ts-ignore
     return (
         <>
             {/*
@@ -73,7 +71,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-10  sm:mx-auto sm:w-full sm:max-w-2xl">
-                    <form action="#" method="POST" className="grid grid-cols-2 gap-8" onSubmit={(e) => {
+                    <form className="grid grid-cols-2 gap-8" onSubmit={(e) => {
                         e.preventDefault();
                         handleSignUp()
                     }}>
@@ -192,13 +190,16 @@ export default function Home() {
                                 <select
                                     name="company"
                                     id="company"
+                                    required={true}
                                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-[#545E75] sm:text-sm/6"
-                                    defaultValue={formState.company}
+                                    defaultValue={ formState?.company }
                                     onChange={onInputChange}
                                 >
+                                    <option value="" disabled>Selecciona una opción</option>
                                     <option value="empresa">Empresa</option>
                                     <option value="empleado">Empleado</option>
                                 </select>
+
 
                             </div>
                         </div>

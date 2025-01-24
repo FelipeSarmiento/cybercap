@@ -6,8 +6,6 @@ export async function middleware(req) {
 
     const session = (await cookies()).get('userSession')?.value;
 
-    console.log(session)
-
     if (!session) {
         if (req.nextUrl.pathname.includes('/Dashboard')) {
             return NextResponse.redirect(new URL('/login', req.url))
