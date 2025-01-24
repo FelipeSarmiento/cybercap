@@ -15,6 +15,8 @@ import {
     TableCellsIcon,
     UserIcon
 } from "@heroicons/react/16/solid";
+import {updateUserCourse} from "../../../data/data";
+import {Questionary} from "../../../app/components/questionary";
 
 const features = [
     {name: '¿Por Qué Es Importante el Uso Seguro del Correo Electrónico?', description: ['Amenazas comunes']},
@@ -218,10 +220,187 @@ const posts = [
         ]
     }
 ]
+
+const questions = [
+    {
+        "title": "¿Cuál es una práctica segura al recibir correos electrónicos?",
+        "answer": [
+            {
+                "title": "Hacer clic en todos los enlaces para verificar su contenido.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Reenviar el correo a todos tus contactos para que también lo revisen.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Evitar abrir correos de remitentes desconocidos y verificar los enlaces antes de hacer clic.",
+                "type": "correct"
+            }
+        ]
+    },
+    {
+        "title": "¿Qué característica puede indicar que un correo electrónico es sospechoso?",
+        "answer": [
+            {
+                "title": "Un saludo formal y profesional.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Un archivo adjunto relacionado con el asunto del correo.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Una dirección de correo desconocida o mal escrita.",
+                "type": "correct"
+            }
+        ]
+    },
+    {
+        "title": "¿Qué debes hacer si un correo solicita información personal o financiera urgente?",
+        "answer": [
+            {
+                "title": "Responder inmediatamente proporcionando la información requerida.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Reenviar el correo a tu equipo de trabajo para revisarlo en conjunto.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Ignorarlo y contactar directamente a la empresa o institución para verificar.",
+                "type": "correct"
+            }
+        ]
+    },
+    {
+        "title": "¿Qué elemento debe verificarse antes de descargar un archivo adjunto en un correo?",
+        "answer": [
+            {
+                "title": "Que el archivo tenga una extensión común como .exe o .zip.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Que el correo tenga un diseño profesional.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Que el correo provenga de un remitente conocido y confiable.",
+                "type": "correct"
+            }
+        ]
+    },
+    {
+        "title": "¿Cómo puedes protegerte contra correos de phishing?",
+        "answer": [
+            {
+                "title": "Descargando cualquier archivo para confirmar que no es peligroso.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Compartiendo el correo con tu equipo para revisar posibles amenazas.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Activando filtros antispam y verificando enlaces antes de hacer clic.",
+                "type": "correct"
+            }
+        ]
+    },
+    {
+        "title": "¿Qué es una firma digital en un correo electrónico?",
+        "answer": [
+            {
+                "title": "Un mensaje automático que se envía a todos los destinatarios.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Un diseño gráfico que embellece el correo electrónico.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Un método para verificar la autenticidad del remitente y garantizar la integridad del contenido.",
+                "type": "correct"
+            }
+        ]
+    },
+    {
+        "title": "¿Cuál de estos es un ejemplo de un enlace seguro en un correo electrónico?",
+        "answer": [
+            {
+                "title": "Un enlace abreviado sin contexto sobre su destino.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Un enlace con caracteres extraños o incompletos.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Un enlace que comienza con 'https://' y proviene de un dominio confiable.",
+                "type": "correct"
+            }
+        ]
+    },
+    {
+        "title": "¿Qué acción es recomendable si recibes un correo con errores ortográficos y gramáticos?",
+        "answer": [
+            {
+                "title": "Responder para solicitar más información al remitente.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Ignorarlo, ya que los errores no indican necesariamente un problema.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Marcarlo como sospechoso y no interactuar con él.",
+                "type": "correct"
+            }
+        ]
+    },
+    {
+        "title": "¿Qué debes hacer si recibes un correo de una dirección desconocida con un archivo adjunto?",
+        "answer": [
+            {
+                "title": "Abrir el archivo para verificar si es importante.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Responder al correo preguntando por el contenido del archivo.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Eliminar el correo inmediatamente y no abrir el archivo adjunto.",
+                "type": "correct"
+            }
+        ]
+    },
+    {
+        "title": "¿Qué es un encabezado de correo electrónico y por qué es útil?",
+        "answer": [
+            {
+                "title": "Es el asunto del correo visible en la bandeja de entrada.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Es un diseño gráfico que decora el inicio del correo.",
+                "type": "incorrect"
+            },
+            {
+                "title": "Es información técnica del correo que ayuda a rastrear su origen.",
+                "type": "correct"
+            }
+        ]
+    }
+]
+
+const hanldeQuestionary = (points) => {
+    updateUserCourse("secureemails", points)
+}
 export default function Page() {
     return (
         <>
-            <div className="bg-white">
+            <div className="bg-white mt-20">
                 <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-12 sm:px-6 sm:py-12 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
                     <div>
                         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Uso Seguro del Correo Electrónico</h2>
@@ -246,22 +425,22 @@ export default function Page() {
                     <div className="grid grid-cols-2 grid-rows-2 gap-4 h-4/6 sm:gap-6 lg:gap-8">
                         <img
                             alt="Walnut card tray filled with cards and card angled in dedicated groove."
-                            src="https://img.freepik.com/fotos-premium/manos-enguantadas-escribiendo-teclado-mientras-trabaja-programacion-ciberseguridad_159283-2869.jpg?w=740"
+                            src="https://img.freepik.com/vector-gratis/ilustracion-concepto-email-marketing_114360-1633.jpg?t=st=1737758775~exp=1737762375~hmac=6d7d55060b1f78f8abb008266d63f48034b9865b73a61076b4654c3787362259&w=1380"
                             className="size-full object-cover rounded-lg bg-gray-100"
                         />
                         <img
                             alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
-                            src="https://img.freepik.com/vector-gratis/concepto-seguridad-cibernetica_53876-93472.jpg?t=st=1737056735~exp=1737060335~hmac=4f41b6d09cdbc242026293a5f849bbbe14fa55f3d7df89b53374df40687e9698&w=1380"
+                            src="https://img.freepik.com/vector-gratis/ilustracion-concepto-boletin_114360-4698.jpg?t=st=1737758800~exp=1737762400~hmac=d52b22631c2785587285750955afc23853a4dafb73ae9796b942fef0b38c4781&w=740"
                             className="size-full object-cover rounded-lg bg-gray-100 "
                         />
                         <img
-                            alt="Top down view of walnut card tray with embedded magnets and card groove."
-                            src="https://img.freepik.com/foto-gratis/concepto-collage-html-css-persona_23-2150062010.jpg?t=st=1737056775~exp=1737060375~hmac=c05596e54615f0d32d0d0bd141a2f85c88c8f73af7e58b22905872931b2d57e1&w=1380"
+                            alt="Side of walnut card tray with card groove and recessed card area."
+                            src="https://img.freepik.com/vector-gratis/correo-electronico-recibir-enviar-correos-electronicos-intercambio-mensajes-dispositivo-electronico-conexion-internet-comunicacion-correspondencia_335657-2704.jpg?t=st=1737758885~exp=1737762485~hmac=50a79a5401001477a1d5f2524383469a0e5419c7971c09797a9b2131bee6d542&w=740"
                             className="size-full object-cover rounded-lg bg-gray-100"
                         />
                         <img
-                            alt="Side of walnut card tray with card groove and recessed card area."
-                            src="https://img.freepik.com/foto-gratis/hacker-mujer-feliz-despues-romper-firewall-gobierno-obtener-acceso-programador-que-escribe-malware-peligroso-ataques-ciberneticos-utilizando-computadora-portatil-rendimiento-medianoche_482257-6702.jpg?t=st=1737056875~exp=1737060475~hmac=38398585f32c516b6c151b7b79c23f20daeda5afc4cb46c4db1dc46bae740287&w=740"
+                            alt="Top down view of walnut card tray with embedded magnets and card groove."
+                            src="https://img.freepik.com/vector-gratis/nuevo-concepto-mensaje-pagina-destino_23-2148310397.jpg?t=st=1737758960~exp=1737762560~hmac=a5dc1b3da6882dd12809bfbba98e845c6a1defc3795c57306a334dec8507737c&w=740"
                             className="size-full object-cover rounded-lg bg-gray-100"
                         />
                     </div>
@@ -294,7 +473,7 @@ export default function Page() {
                         </div>
                         <img
                             alt="Product screenshot"
-                            src="https://img.freepik.com/foto-gratis/hermosa-mujer-joven-oficina-casa-trabajando-casa-concepto-teletrabajo_144627-46787.jpg?t=st=1737061873~exp=1737065473~hmac=64ea6c14104fc5b61ffceeff19751290075190047453dc25a9259ccfae862104&w=1380"
+                            src="https://img.freepik.com/vector-gratis/ilustracion-concepto-email-marketing_114360-1681.jpg?t=st=1737759014~exp=1737762614~hmac=300f4d3534ccf45e9530b238f8973fe7c1ecd626e6db120467d16379913269fd&w=740"
                             width={2432}
                             height={1300}
                             className="w-[44rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[48rem] md:-ml-4 lg:ml-0"
@@ -317,7 +496,7 @@ export default function Page() {
                     <div className="-ml-12 p-12 lg:sticky lg:top-16 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
                         <img
                             alt=""
-                            src="https://tailwindui.com/plus/img/component-images/dark-project-app-screenshot.png"
+                            src="https://img.freepik.com/vector-gratis/concepto-cuenta-phishing_23-2148546508.jpg?t=st=1737759066~exp=1737762666~hmac=2aae6a1236a29a71a4251ef75aa304ab0d63c0880f7f3ae0177397fac2666bbb&w=740"
                             className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
                         />
                     </div>
@@ -360,7 +539,7 @@ export default function Page() {
                     <div className="-ml-12 p-12 lg:sticky lg:top-16 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
                         <img
                             alt=""
-                            src="https://tailwindui.com/plus/img/component-images/dark-project-app-screenshot.png"
+                            src="https://img.freepik.com/vector-gratis/ilustracion-concepto-boletin_114360-4698.jpg?t=st=1737758800~exp=1737762400~hmac=d52b22631c2785587285750955afc23853a4dafb73ae9796b942fef0b38c4781&w=740"
                             className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
                         />
                     </div>
@@ -484,6 +663,7 @@ export default function Page() {
                     </div>
                 </div>
             </div>
+            <Questionary questions={questions} hanldeQuestionary={hanldeQuestionary} />
         </>
     )
 }

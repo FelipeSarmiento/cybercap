@@ -67,7 +67,7 @@ export const Questionary = ({questions, hanldeQuestionary}) => {
                                         question.answer.sort().map((answers, index) => (
                                             <div
                                                 key={"answer-" + index}
-                                                className={` cursor-pointer h-48 rounded-xl flex justify-center items-center font-bold p-10 text-center hover:border-green-500 ${selected["question-" + questionIndex] === 'answer-' + index ? 'border-4 border-green-500': 'border-2 border-[#545E75]'}`}
+                                                className={` cursor-pointer h-40x rounded-xl flex justify-center items-center font-bold p-10 text-center hover:border-green-500 ${selected["question-" + questionIndex] === 'answer-' + index ? 'border-4 border-green-500 bg-lime-100': 'border-2 border-[#545E75]'}`}
                                                 onClick={ () => {
                                                     handleSelected("question-" + questionIndex, "answer-" + index )
                                                     handlePoints("question-" + questionIndex, answers.type )

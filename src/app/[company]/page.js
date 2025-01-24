@@ -85,13 +85,13 @@ export default function Page() {
                 {
                   usersByCompany?.map((user) => (
                       <div key={`user-${user.idusuario}`} className="grid grid-cols-7 h-20">
-                        <div className="flex items-center justify-center border border-gray-800">{user?.names} {user?.lastname}</div>
-                        <div className="flex items-center justify-center border border-gray-800">{user?.email}</div>
-                        <div className="flex items-center justify-center border border-gray-800">{user?.identification}</div>
-                        <div className={`flex items-center justify-center border border-gray-800 font-extrabold ${ getClassName(user?.phishing) }`}>{user?.phishing ?? '0.0'}</div>
-                        <div className={`flex items-center justify-center border border-gray-800 font-extrabold ${ getClassName(user?.secureemails) }`}>{user?.secureemails ?? '0.0'}</div>
-                        <div className={`flex items-center justify-center border border-gray-800 font-extrabold ${ getClassName(user?.strongpasswords) }`}>{user?.strongpasswords ?? '0.0'}</div>
-                        <div className={`flex items-center justify-center border border-gray-800 font-extrabold ${ getClassName(user?.socialengineering) }`}>{user?.socialengineering ?? '0.0'}</div>
+                        <div className="flex items-center justify-center border-b-2 border-gray-800">{user?.names} {user?.lastname}</div>
+                        <div className="flex items-center justify-center border-b-2 border-gray-800">{user?.email}</div>
+                        <div className="flex items-center justify-center border-b-2 border-gray-800">{user?.identification}</div>
+                        <div className={`flex items-center justify-center border-b-2 border-gray-800 font-extrabold ${ getClassName(user?.phishing) }`}>{user?.phishing ?? '0.0'}</div>
+                        <div className={`flex items-center justify-center border-b-2 border-gray-800 font-extrabold ${ getClassName(user?.secureemails) }`}>{user?.secureemails ?? '0.0'}</div>
+                        <div className={`flex items-center justify-center border-b-2 border-gray-800 font-extrabold ${ getClassName(user?.strongpasswords) }`}>{user?.strongpasswords ?? '0.0'}</div>
+                        <div className={`flex items-center justify-center border-b-2 border-gray-800 font-extrabold ${ getClassName(user?.socialengineering) }`}>{user?.socialengineering ?? '0.0'}</div>
                       </div>
                   ))
                 }

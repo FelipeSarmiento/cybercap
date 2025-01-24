@@ -379,7 +379,7 @@ const hanldeQuestionary = (points) => {
 export default function Page() {
     return (
         <>
-            <div className="bg-white">
+            <div className="bg-white mt-20">
                 <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-12 sm:px-6 sm:py-12 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
                     <div>
                         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contraseñas Robustas</h2>

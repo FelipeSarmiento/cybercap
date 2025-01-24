@@ -380,7 +380,7 @@ export default function Page() {
     return (
         <>
             <div className="bg-white">
-                <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-12 sm:px-6 sm:py-12 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+                <div className="mx-auto mt-20 grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-12 sm:px-6 sm:py-12 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
                     <div>
                         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Phishing</h2>
 
@@ -401,25 +401,25 @@ export default function Page() {
                             ))}
                         </dl>
                     </div>
-                    <div className="grid grid-cols-2 grid-rows-2 gap-4 h-4/6 sm:gap-6 lg:gap-8">
+                    <div className="grid grid-cols-2 grid-rows-2 gap-4 h-5/6 sm:gap-6 lg:gap-8">
                         <img
                             alt="Walnut card tray filled with cards and card angled in dedicated groove."
-                            src="https://img.freepik.com/fotos-premium/manos-enguantadas-escribiendo-teclado-mientras-trabaja-programacion-ciberseguridad_159283-2869.jpg?w=740"
+                            src="https://img.freepik.com/vector-gratis/ilustracion-concepto-suplantacion-cuenta_114360-2017.jpg?t=st=1737757745~exp=1737761345~hmac=2bd54a4bd20724336679684b712eee544bf3191cf8d3d240ab648e9371cc93fb&w=740"
                             className="size-full object-cover rounded-lg bg-gray-100"
                         />
                         <img
                             alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
-                            src="https://img.freepik.com/vector-gratis/concepto-seguridad-cibernetica_53876-93472.jpg?t=st=1737056735~exp=1737060335~hmac=4f41b6d09cdbc242026293a5f849bbbe14fa55f3d7df89b53374df40687e9698&w=1380"
+                            src="https://img.freepik.com/vector-gratis/concepto-cuenta-phishing_23-2148545162.jpg?t=st=1737757778~exp=1737761378~hmac=6bb6b3655996c73a193f539b23839b742ffbb6bb0c25f56b75e4c3fd2b406334&w=740"
                             className="size-full object-cover rounded-lg bg-gray-100 "
                         />
                         <img
                             alt="Top down view of walnut card tray with embedded magnets and card groove."
-                            src="https://img.freepik.com/foto-gratis/concepto-collage-html-css-persona_23-2150062010.jpg?t=st=1737056775~exp=1737060375~hmac=c05596e54615f0d32d0d0bd141a2f85c88c8f73af7e58b22905872931b2d57e1&w=1380"
+                            src="https://img.freepik.com/vector-gratis/concepto-cuenta-phishing_23-2148552774.jpg?t=st=1737757857~exp=1737761457~hmac=f93470925a52a9d30a0ada89ac7c37e38fc5c5d0932630eaa9c1ea960bcbe6ce&w=740"
                             className="size-full object-cover rounded-lg bg-gray-100"
                         />
                         <img
                             alt="Side of walnut card tray with card groove and recessed card area."
-                            src="https://img.freepik.com/foto-gratis/hacker-mujer-feliz-despues-romper-firewall-gobierno-obtener-acceso-programador-que-escribe-malware-peligroso-ataques-ciberneticos-utilizando-computadora-portatil-rendimiento-medianoche_482257-6702.jpg?t=st=1737056875~exp=1737060475~hmac=38398585f32c516b6c151b7b79c23f20daeda5afc4cb46c4db1dc46bae740287&w=740"
+                            src="https://img.freepik.com/vector-gratis/ilustracion-concepto-suplantacion-cuenta_114360-2068.jpg?t=st=1737757800~exp=1737761400~hmac=e821efa6d2f9e8c391310a70d72a6d51fc7619396f07eac99294c07ad697bdee&w=740"
                             className="size-full object-cover rounded-lg bg-gray-100"
                         />
                     </div>
@@ -457,7 +457,7 @@ export default function Page() {
                         </div>
                         <img
                             alt="Product screenshot"
-                            src="https://img.freepik.com/foto-gratis/hermosa-mujer-joven-oficina-casa-trabajando-casa-concepto-teletrabajo_144627-46787.jpg?t=st=1737061873~exp=1737065473~hmac=64ea6c14104fc5b61ffceeff19751290075190047453dc25a9259ccfae862104&w=1380"
+                            src="https://img.freepik.com/vector-gratis/pagina-inicio-phishing-movil_23-2148543437.jpg?t=st=1737757948~exp=1737761548~hmac=8ba144edd4c2766bfab96cb8a86fb8c37a6e1c7adf7dcd70d3ad70bf0b60f8a7&w=1380"
                             width={2432}
                             height={1300}
                             className="w-[44rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[48rem] md:-ml-4 lg:ml-0"
@@ -483,7 +483,7 @@ export default function Page() {
                     <div className="-ml-12 p-12 lg:sticky lg:top-16 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
                         <img
                             alt=""
-                            src="https://tailwindui.com/plus/img/component-images/dark-project-app-screenshot.png"
+                            src="https://img.freepik.com/vector-premium/diseno-plano-editable-ilustracion-phishing-movil_203633-3612.jpg?w=740"
                             className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
                         />
                     </div>
@@ -529,7 +529,7 @@ export default function Page() {
                     <div className="-ml-12 p-12 lg:sticky lg:top-16 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
                         <img
                             alt=""
-                            src="https://tailwindui.com/plus/img/component-images/dark-project-app-screenshot.png"
+                            src="https://img.freepik.com/vector-gratis/concepto-cuenta-phishing_23-2148530847.jpg?t=st=1737758054~exp=1737761654~hmac=f87857c8cbf022f25561f6c1d841f60dd5252031905831c776f07cfa460ca5fe&w=740"
                             className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
                         />
                     </div>
