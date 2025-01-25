@@ -21,7 +21,7 @@ export async function middleware(req) {
 }
 
 export const config = {
-    matcher: ['/login', '/register', '/courses', '/', '/Dashboard', '/myprofile', '/courses/secureemails', '/courses/phishing'],
+    matcher: ['/login', '/register', '/courses', '/', '/Dashboard', '/myprofile', '/courses/secureemails', '/courses/phishing', '/courses/strongpasswords', '/courses/socialengineering'],
     api: {
         bodyParser: {
             sizeLimit: '40mb',
