@@ -85,7 +85,7 @@ export const NavBar = () => {
                             {/* Profile dropdown */}
                             {
                                 path === "/register" || path === "/login" ? "" : (
-                                    session?.names === undefined ? (
+                                    session?.name === undefined ? (
                                         <a href="/login">
                                             <Menu as="div" className="relative ml-3">
                                                 <div>
