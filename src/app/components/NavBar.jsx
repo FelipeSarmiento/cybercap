@@ -16,7 +16,7 @@ function classNames(...classes) {
 
 export const NavBar = () => {
 
-    const [session, setSession] = useState('')
+    const [session, setSession] = useState()
 
     const [path, setPath] = useState()
 
@@ -85,7 +85,7 @@ export const NavBar = () => {
                             {/* Profile dropdown */}
                             {
                                 path === "/register" || path === "/login" ? "" : (
-                                    !session ? (
+                                    session?.names === undefined ? (
                                         <a href="/login">
                                             <Menu as="div" className="relative ml-3">
                                                 <div>
@@ -128,7 +128,7 @@ export const NavBar = () => {
                                                 <div>
                                                     <MenuButton onClick={ logout } className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
                                                         <span className="absolute -inset-1.5"/>
-                                                        <span className="font-bold text-md">Log Out</span>
+                                                        <span className="font-bold text-md">Salir</span>
                                                         <span className="sr-only">Open user menu</span>
                                                     </MenuButton>
                                                 </div>

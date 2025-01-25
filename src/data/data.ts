@@ -19,8 +19,22 @@ const sql = neon(`${process.env.DATABASE_URL}`);
 export const registerUser = async (users) => {
     try {
         const {password, email, names, lastname, identification, role, company, companyname, phone, terms} = users
-        console.log("name: " + company)
         const date_created = new Date()
+
+        if (company === 'empresa'){
+            let queryValidate = `SELECT * FROM usuarios WHERE company = 'empresa' AND companyname = '${companyname}'`;
+
+            let resultExist = await sql(queryValidate);
+
+            // @ts-ignore
+            if (resultExist.length >= 1){
+                return {
+                    message: "La empresa " + companyname + " ya esta registrada",
+                    type: "error"
+                }
+            }
+        }
+
         let passwordEncrypted = encrypt(password, process.env.NEXT_PUBLIC_REACT_APP_SECRET_KEY ?? 'S0FtW@r3N3xT!@#');
 
         let query = `INSERT INTO usuarios (names, lastname, email, identification, phone, role, company, companyname, password, datecreated, dateupdated, terms) VALUES ('${names}', '${lastname}', '${email}', '${identification}', '${phone}', '${role}', '${company}', '${companyname}', '${passwordEncrypted}', '${date_created}', '${date_created}', 'true') RETURNING *`
