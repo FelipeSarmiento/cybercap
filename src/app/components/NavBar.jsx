@@ -84,8 +84,8 @@ export const NavBar = () => {
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                             {/* Profile dropdown */}
                             {
-                                !session ? (
-                                    (path === "/register" || path === '/login' ? "" : (
+                                path === "/register" || path === "/login" ? "" : (
+                                    !session ? (
                                         <a href="/login">
                                             <Menu as="div" className="relative ml-3">
                                                 <div>
@@ -98,44 +98,45 @@ export const NavBar = () => {
                                                 </div>
                                             </Menu>
                                         </a>
-                                    ))
-                                ) : (
-                                    <>
-                                        <Menu as="div" className="relative ml-3">
-                                            <div>
-                                                <MenuButton disabled className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
-                                                    <span className="absolute -inset-1.5"/>
-                                                    <span className="font-bold text-md">{session?.name}</span>
-                                                    <span className="sr-only">Open user menu</span>
-                                                </MenuButton>
-                                            </div>
-                                        </Menu>
-                                        {
-                                            session?.type === 'empresa' ? (
-                                                <a href={`/${session?.companyname}`}>
-                                                    <Menu as="div" className="relative ml-3">
-                                                        <div>
-                                                            <MenuButton className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
-                                                                <span className="absolute -inset-1.5"/>
-                                                                <span className="font-bold text-md">{session?.companyname}</span>
-                                                                <span className="sr-only">Open user menu</span>
-                                                            </MenuButton>
-                                                        </div>
-                                                    </Menu>
-                                                </a>
-                                            ) : ''
-                                        }
-                                        <Menu as="div" className="relative ml-3">
-                                            <div>
-                                                <MenuButton onClick={ logout } className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
-                                                    <span className="absolute -inset-1.5"/>
-                                                    <span className="font-bold text-md">Log Out</span>
-                                                    <span className="sr-only">Open user menu</span>
-                                                </MenuButton>
-                                            </div>
-                                        </Menu>
-                                    </>
+                                    ) : (
+                                        <>
+                                            <Menu as="div" className="relative ml-3">
+                                                <div>
+                                                    <MenuButton disabled className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
+                                                        <span className="absolute -inset-1.5"/>
+                                                        <span className="font-bold text-md">{session?.name}</span>
+                                                        <span className="sr-only">Open user menu</span>
+                                                    </MenuButton>
+                                                </div>
+                                            </Menu>
+                                            {
+                                                session?.type === 'empresa' ? (
+                                                    <a href={`/${session?.companyname}`}>
+                                                        <Menu as="div" className="relative ml-3">
+                                                            <div>
+                                                                <MenuButton className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
+                                                                    <span className="absolute -inset-1.5"/>
+                                                                    <span className="font-bold text-md">{session?.companyname}</span>
+                                                                    <span className="sr-only">Open user menu</span>
+                                                                </MenuButton>
+                                                            </div>
+                                                        </Menu>
+                                                    </a>
+                                                ) : ''
+                                            }
+                                            <Menu as="div" className="relative ml-3">
+                                                <div>
+                                                    <MenuButton onClick={ logout } className="relative flex rounded-xl items-center gap-1 px-2 py-2.5 text-sm border-2 border-transparent hover:border-white">
+                                                        <span className="absolute -inset-1.5"/>
+                                                        <span className="font-bold text-md">Log Out</span>
+                                                        <span className="sr-only">Open user menu</span>
+                                                    </MenuButton>
+                                                </div>
+                                            </Menu>
+                                        </>
+                                    )
                                 )
+
                             }
 
                         </div>
